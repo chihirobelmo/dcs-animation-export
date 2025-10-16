@@ -14,6 +14,7 @@ public class Bf109Behaviour : MonoBehaviour
     {
         public float time;
         public Vector3 position;
+        public Vector3 velocity;
         public Quaternion rotation;
     }
 
@@ -27,6 +28,7 @@ public class Bf109Behaviour : MonoBehaviour
             {
                 time = float.Parse(cols[0]),
                 position = new Vector3(float.Parse(cols[1]), float.Parse(cols[2]), float.Parse(cols[3])),
+                velocity = new Vector3(-float.Parse(cols[7]), +float.Parse(cols[8]), +float.Parse(cols[9])),
                 rotation = Quaternion.Euler(
                     +float.Parse(cols[5]), // バンク角（ロール）X
                     +float.Parse(cols[6]), // 方位角（ヨー）Y
@@ -45,7 +47,7 @@ public class Bf109Behaviour : MonoBehaviour
             if (timeElapsed >= keyframes[i].time && timeElapsed < keyframes[i + 1].time)
             {
                 float t = Mathf.InverseLerp(keyframes[i].time, keyframes[i + 1].time, timeElapsed);
-                transform.position = Vector3.Lerp(keyframes[i].position, keyframes[i + 1].position, t) - keyframes[0].position;
+                transform.position += Vector3.Lerp(keyframes[i].velocity, keyframes[i + 1].velocity, t) * Time.deltaTime;
                 transform.rotation = Quaternion.Slerp(keyframes[i].rotation, keyframes[i + 1].rotation, t);
                 break;
             }

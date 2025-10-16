@@ -5,7 +5,7 @@ public class AroundCamera : MonoBehaviour
     [SerializeField]
     public Transform target;      // 追従するターゲット
     public Vector3 offset = new Vector3(0, 5, -10); // ターゲットからの相対位置
-    public float smoothSpeed = 0.125f; // 追従のスムーズさ
+    public float smoothSpeed = 100.0f; // 追従のスムーズさ
 
     void LateUpdate()
     {
